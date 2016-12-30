@@ -1,0 +1,12 @@
+{
+  "name": "Moopy",
+  "version": "1.0.0",
+  "description": "Desktop client app for Moopy",
+  "dependencies": {
+    "auto-launch": "^5.0.1",
+    "menubar": "*"
+  },
+  "author": "Ishaan Puniani <ishaan.puniani@gmail.com>",
+  "license": "MIT",
+  "main": "main.js"
+}
