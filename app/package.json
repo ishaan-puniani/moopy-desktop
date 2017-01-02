@@ -4,7 +4,8 @@
   "description": "Desktop client app for Moopy",
   "dependencies": {
     "auto-launch": "^5.0.1",
-    "menubar": "*"
+    "menubar": "*",
+    "username": "^2.2.2"
   },
   "author": "Ishaan Puniani <ishaan.puniani@gmail.com>",
   "license": "MIT",

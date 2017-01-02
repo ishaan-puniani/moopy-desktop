@@ -1,35 +1,32 @@
 var AutoLaunch = require('auto-launch');
- 
+
 var minecraftAutoLauncher = new AutoLaunch({
-	 name: 'Moopy'
+    name: 'Moopy'
 });
- 
+
 minecraftAutoLauncher.enable();
- 
+
 //minecraftAutoLauncher.disable(); 
- 
- 
+
+
 minecraftAutoLauncher.isEnabled()
-.then(function(isEnabled){
-    if(isEnabled){
-        return;
-    }
-    minecraftAutoLauncher.enable();
-})
-.catch(function(err){
-    // handle error 
-});
+    .then(function (isEnabled) {
+        if (isEnabled) {
+            return;
+        }
+        minecraftAutoLauncher.enable();
+    })
+    .catch(function (err) {
+        // handle error
+    });
 
 
-
-
-
-
-var menubar = require('menubar');
+var menuBar = require('menubar');
 var http = require('http');
 var path = require('path');
-var child_process = require('child_process');
-var machineName = child_process.execSync('cmd.exe /c "echo %username%');
+var username = require('username');
+var machineName = username.sync();
+var electron = require('electron')
 var options = {
     host: 'localhost',
     port: "9090",
@@ -37,18 +34,31 @@ var options = {
 };
 
 
-var mb = menubar({dir: __dirname,index : 'file://' + path.join(__dirname, 'index.html')+"?"+ machineName.toString(), preloadWindow: true, width: 400, height: 130, tooltip: "hello"})
+var mb = menuBar({
+    dir: __dirname,
+    index: 'file://' + path.join(__dirname, 'index.html') + "?name=" + machineName,
+    preloadWindow: true,
+    width: 400,
+    height: 130,
+    tooltip: "Moopy",
+    showDockIcon: true,
+    fullscreenable: false,
+    show_in_taskbar: false,
+    windowPosition: "center",
+    resizable: false//,
+    //icon: __dirname + '/IconTemplate.png'
+});
 
 mb.on('ready', function ready() {
     /*setInterval(function () {
-        getNotification(function (res) {
-            console.log(res);
-            res = JSON.parse(res);
-            if (res.success) {
-                mb.window.show();
-            }
-        })
-    }, 10 * 1000)*/
+     getNotification(function (res) {
+     console.log(res);
+     res = JSON.parse(res);
+     if (res.success) {
+     mb.window.show();
+     }
+     })
+     }, 10 * 1000)*/
 });
 
 mb.on('after-create-window', function () {
@@ -67,7 +77,7 @@ mb.on('after-show', function () {
 
 function getNotification(cb) {
     var req = http.get(options, function (res) {
-       // console.log('STATUS: ' + res.statusCode);
+        // console.log('STATUS: ' + res.statusCode);
         //console.log('HEADERS: ' + JSON.stringify(res.headers));
 
         // Buffer the body entirely for processing as a whole.
