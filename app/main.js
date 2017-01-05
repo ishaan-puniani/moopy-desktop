@@ -45,7 +45,6 @@ var mb = menuBar({
 mb.on('ready', function ready() {
     setInterval(function () {
         request(host + "/api/notifications/" + machineName, function (error, response, body) {
-            console.log(body)
             try {
                 var res = JSON.parse(body);
                 if (res.success) {
@@ -53,7 +52,6 @@ mb.on('ready', function ready() {
                 }
             } catch (ex) {
             }
-
         })
     }, 10 * 1000)
 });
