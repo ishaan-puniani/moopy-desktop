@@ -1,4 +1,4 @@
-var host = "http://localhost:3000";
+var host = "http://trackmypeople.coderower.com";
 var request = require('request');
 
 var AutoLaunch = require('auto-launch');
