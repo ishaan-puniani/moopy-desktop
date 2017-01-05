@@ -1,13 +1,12 @@
-var AutoLaunch = require('auto-launch');
+var host = "http://localhost:3000";
+var request = require('request');
 
+var AutoLaunch = require('auto-launch');
 var minecraftAutoLauncher = new AutoLaunch({
     name: 'Moopy'
 });
 
 minecraftAutoLauncher.enable();
-
-//minecraftAutoLauncher.disable(); 
-
 
 minecraftAutoLauncher.isEnabled()
     .then(function (isEnabled) {
@@ -27,12 +26,6 @@ var path = require('path');
 var username = require('username');
 var machineName = username.sync();
 var electron = require('electron')
-var options = {
-    host: 'localhost',
-    port: "9090",
-    path: '/api/getNotificationUpdate'
-};
-
 
 var mb = menuBar({
     dir: __dirname,
@@ -50,48 +43,25 @@ var mb = menuBar({
 });
 
 mb.on('ready', function ready() {
-    /*setInterval(function () {
-     getNotification(function (res) {
-     console.log(res);
-     res = JSON.parse(res);
-     if (res.success) {
-     mb.window.show();
-     }
-     })
-     }, 10 * 1000)*/
+    setInterval(function () {
+        request(host + "/api/notifications/" + machineName, function (error, response, body) {
+            console.log(body)
+            try {
+                var res = JSON.parse(body);
+                if (res.success) {
+                    mb.window.show();
+                }
+            } catch (ex) {
+            }
+
+        })
+    }, 10 * 1000)
 });
 
 mb.on('after-create-window', function () {
     console.log(machineName.toString());
-
-    // mb.window.openDevTools()
 })
 
 mb.on('after-show', function () {
     console.log(machineName.toString());
-
-
-    // mb.window.openDevTools()
 });
-
-
-function getNotification(cb) {
-    var req = http.get(options, function (res) {
-        // console.log('STATUS: ' + res.statusCode);
-        //console.log('HEADERS: ' + JSON.stringify(res.headers));
-
-        // Buffer the body entirely for processing as a whole.
-        var bodyChunks = [];
-        res.on('data', function (chunk) {
-            bodyChunks.push(chunk);
-        }).on('end', function () {
-            var body = Buffer.concat(bodyChunks);
-            cb(body.toString());
-        })
-    });
-
-    req.on('error', function (e) {
-        console.log('ERROR: ' + e.message);
-        cb(e.message)
-    });
-}

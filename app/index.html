@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script>var host = "http://localhost:3000"</script>
     <title>Moopy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -95,7 +96,7 @@
 
 <script>
     //var ipc = require('ipc')
-   var  remote = require('electron').remote;
+    var remote = require('electron').remote;
 
     function getParameterByName(name, url) {
         if (!url) {
@@ -118,7 +119,7 @@
         //document.getElementById("output").innerHTML = machineName;
         var user = machineName;// document.getElementById("txtUser").value;
         var oReq = new XMLHttpRequest();
-        oReq.open("GET", "http://trackmypeople.coderower.com/api/moods/set?user=" + user + "&mood=" + mood);
+        oReq.open("GET", host + "/api/moods/set?user=" + user + "&mood=" + mood);
         oReq.send();
         var window = remote.getCurrentWindow();
         window.minimize();
